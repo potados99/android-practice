@@ -6,21 +6,20 @@
                                                  android:layout_height="match_parent"
                                                  android:fitsSystemWindows="true"
                                                  tools:context=".ItemDetailActivity"
-                                                 tools:ignore="MergeRootFrame">
+                                                 tools:ignore="MergeRootFrame" android:id="@+id/detail_root_layout">
 
     <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar"
+            android:id="@+id/detail_app_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/toolbar_layout"
+                android:id="@+id/detail_toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
 
@@ -39,7 +38,9 @@
             android:id="@+id/item_detail_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <include layout="@layout/item_detail"/>
+    </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -47,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
             android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@android:drawable/stat_notify_chat"
+            app:srcCompat="@android:drawable/ic_media_play"
             app:layout_anchor="@+id/item_detail_container"
             app:layout_anchorGravity="top|end"/>
 

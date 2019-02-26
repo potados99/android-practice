@@ -27,12 +27,13 @@ class SimpleItemRecyclerViewAdapter(
                 arguments = Bundle().apply {
                     /* new bundle as an argument in the fragment. */
                     putInt(ItemDetailFragment.ARG_ITEM_ID, item.id)
+                    putBoolean(ItemDetailFragment.ARG_TWO_PANE, twoPane)
                 }
             }
 
             parentActivity.supportFragmentManager /* item_detail_container on activity_item_list. */
                 .beginTransaction()
-                .replace(R.id.item_detail_container, fragment)
+                .replace(R.id.item_detail_container, fragment) // correct.
                 .commit()
         }
 

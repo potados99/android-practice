@@ -17,16 +17,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_detail)
-        setSupportActionBar(detail_toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
-        // Show the Up button in the action bar.
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
             // First time being loaded.
@@ -42,7 +33,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
             supportFragmentManager
                 .beginTransaction() /* item_detail_container on itself(activity_item_detail). */
-                .add(R.id.item_detail_container, fragment)
+                .add(android.R.id.content, fragment) /* setting content view */
                 .commit()
         }
     }

@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.design.widget.Snackbar
+import android.support.design.widget.VisibilityAwareImageButton
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import com.potados.practice.data.BGMovie
@@ -37,21 +39,22 @@ class ItemListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_list)
-
         setSupportActionBar(toolbar)
+
         toolbar.title = title
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
-        if (item_detail_container != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            twoPane = true
+        twoPane = (item_detail_container != null).apply {
+            if (!this) {
+                // Small screen.
+                info_fab.setOnClickListener { view ->
+                    Snackbar.make(view, "Help?", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+                }
+            }
+            else {
+                // Wide screen.
+                info_fab.visibility = View.INVISIBLE
+            }
         }
 
         setupRecyclerView(item_list)
