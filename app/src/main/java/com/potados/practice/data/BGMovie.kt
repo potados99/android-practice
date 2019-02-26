@@ -9,7 +9,7 @@ import java.time.Duration
 data class BGMovie(
     val id: Int,
     val title: String,
-    val description: String? = null,
-    val filename: String? = null,
-    val duration: Duration? = null
+    val description: String,
+    val filename: String,
+    val duration: Duration
 )

@@ -33,7 +33,7 @@ class SimpleItemRecyclerViewAdapter(
 
             parentActivity.supportFragmentManager /* item_detail_container on activity_item_list. */
                 .beginTransaction()
-                .replace(R.id.item_detail_container, fragment) // correct.
+                .replace(R.id.detail_fragment_container, fragment) // correct.
                 .commit()
         }
 

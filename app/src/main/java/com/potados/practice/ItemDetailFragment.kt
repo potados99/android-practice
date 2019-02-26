@@ -33,7 +33,7 @@ class ItemDetailFragment : Fragment() {
         this.arguments?.let {
             if (it.containsKey(ARG_ITEM_ID)) {
                 // get selected item and set toolbar title.
-                item = provider.getValidMap()?.get(it.getInt(ARG_ITEM_ID))
+                item = provider.moviesInMap[it.getInt(ARG_ITEM_ID)]
                 // activity?.toolbar_layout?.title = item?.title ?: "NULL"
             }
             if (it.containsKey(ARG_TWO_PANE)) {
@@ -51,31 +51,32 @@ class ItemDetailFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.activity_item_detail, container, false)
 
-        val appCompatActivity = (activity as AppCompatActivity).apply {
+        with(activity as AppCompatActivity) {
             setSupportActionBar(rootView.detail_toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(!twoPane)
         }
 
         with(rootView) {
-            item?.let {
-                item_detail_container.item_detail.text = BGMovieDescriptor(item).toString()
+            BGMovieDescriptor(item).assertNonNull().let {
 
+                // Item detail container
+                with(item_detail_container) {
+                    item_detail.text = it.toString()
+                }
+
+                // App bar
                 with(detail_app_bar) {
-
-                    val bg = ContextCompat.getDrawable(
-                        appCompatActivity.applicationContext,
-                        R.drawable.forest
-                    )?.apply {
+                    val bg = it.thumbNail.apply {
                         layoutParams.height = intrinsicHeight
                     }
 
-                    with (detail_toolbar_layout) {
+                    with(detail_toolbar_layout) {
                         title = item?.title ?: "NULL"
                         background = bg
                     }
-
                 }
             }
+
             fab.setOnClickListener { view ->
                 Snackbar.make(view, "Play go go!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()

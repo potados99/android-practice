@@ -1,14 +1,15 @@
 package com.potados.practice.data
 
 class BGMovieProvider(private val repository: BGMovieRepository) {
-    fun updateRepository() = repository.update()
+    val moviesInList: List<BGMovie>
+        get() = repository?.getAllList().filter {
+            BGMovieDescriptor(it).isValid /* heavy but sexy */
+        }
 
-    fun getValidList(): List<BGMovie>? {
-        return repository?.getAllList()
-        TODO("Validation check here. Return only playable contents.")
-    }
-    fun getValidMap(): Map<Int, BGMovie>? {
-        return repository?.getAllMap()
-        TODO("Validation check here. Return only playable contents.")
-    }
+    val moviesInMap: Map<Int, BGMovie>
+        get() = repository?.getAllMap().filter {
+            BGMovieDescriptor(it.value).isValid /* huh? */
+        }
+
+    fun updateRepository() = repository.update()
 }

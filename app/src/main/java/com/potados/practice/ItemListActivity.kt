@@ -43,7 +43,7 @@ class ItemListActivity : AppCompatActivity() {
 
         toolbar.title = title
 
-        twoPane = (item_detail_container != null).apply {
+        twoPane = (detail_fragment_container != null).apply {
             if (!this) {
                 // Small screen.
                 info_fab.setOnClickListener { view ->
@@ -61,8 +61,6 @@ class ItemListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        provider.getValidList()?.let {
-            recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, it, twoPane)
-        }
+        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, provider.moviesInList, twoPane)
     }
 }
