@@ -64,7 +64,10 @@ object InvalidBGMovie {
             duration = Duration.ZERO
         )
 
+    fun wrongId(originId: Int): BGMovie = invalidObject(originId, "ID is null.")
     fun nullObject(originId: Int): BGMovie = invalidObject(originId, "Object is null.")
     fun fileNotFound(originId: Int): BGMovie = invalidObject(originId, "File is not found.")
     fun contentInvalid(originId: Int): BGMovie = invalidObject(originId, "Content is invalid.")
+    fun notInitialized(originId: Int): BGMovie = invalidObject(originId, "Object not initialized yet.")
+
 }

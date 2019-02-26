@@ -1,5 +1,7 @@
 package com.potados.practice
 
+import android.arch.lifecycle.Observer
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -7,12 +9,16 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.potados.practice.data.BGMovie
 import com.potados.practice.data.BGMovieDescriptor
 import com.potados.practice.data.BGMovieProvider
+import com.potados.practice.model.ItemDetailFragmentModel
+import com.potados.practice.viewmodel.ItemDetailFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_bgmovie_detail.view.*
-import kotlinx.android.synthetic.main.bgmovie_detail_content.view.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.getViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * A fragment representing a single Item detail screen.
@@ -20,23 +26,22 @@ import org.koin.android.ext.android.inject
  * in two-pane mode (on tablets) or a [ItemDetailActivity]
  * on handsets.
  */
-class ItemDetailFragment : Fragment() {
+class ItemDetailFragment() : Fragment() {
 
-    private var item: BGMovie? = null
-    private val provider: BGMovieProvider by inject()
-    private var twoPane: Boolean = false
+    private val vm by viewModel<ItemDetailFragmentViewModel>()
+    private val parentActivity by lazy { activity as AppCompatActivity }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        this.arguments?.let {
-            if (it.containsKey(ARG_ITEM_ID)) {
-                // get selected item and set toolbar title.
-                item = provider.moviesInMap[it.getInt(ARG_ITEM_ID)]
-                // activity?.toolbar_layout?.title = item?.title ?: "NULL"
-            }
-            if (it.containsKey(ARG_TWO_PANE)) {
-                twoPane = it.getBoolean(ARG_TWO_PANE)
+        arguments?.let {
+            with(vm) {
+                if (it.containsKey(ARG_ITEM_ID)) {
+                    setItemId(it.getInt(ARG_ITEM_ID))
+                }
+                if (it.containsKey(ARG_TWO_PANE)) {
+                    setTwoPane(it.getBoolean(ARG_TWO_PANE))
+                }
             }
         }
     }
@@ -48,37 +53,43 @@ class ItemDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_bgmovie_detail, container, false)
-
-        with(activity as AppCompatActivity) {
-            setSupportActionBar(rootView.detail_toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(!twoPane)
-        }
-
-        with(rootView) {
-            BGMovieDescriptor(item).assertNonNull().let {
-
-                // Item detail container
-                with(item_detail_container) {
-                    detail_list.adapter = BGMovieDetailRecyclerViewAdapter(it.fieldsMap)
-                }
-                // App bar
-                with(detail_app_bar) {
-                    val bg = it.thumbNail.apply {
-                        layoutParams.height = intrinsicHeight
-                    }
-
-                    with(detail_toolbar_layout) {
-                        title = item?.title ?: "NULL"
-                        background = bg
-                    }
-                }
-            }
-
+        val rootView = inflater.inflate(R.layout.fragment_bgmovie_detail,
+            container, false).apply {
             fab.setOnClickListener { view ->
                 Snackbar.make(view, "Play go go!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
             }
+            parentActivity.setSupportActionBar(detail_toolbar)
+        }
+
+        with(vm) {
+            val owner = this@ItemDetailFragment
+
+            getDescriptor().observe(owner, Observer {
+                it?.let { desc ->
+                    with(rootView) {
+                        detail_list.adapter = BGMovieDetailRecyclerViewAdapter(desc.fieldsMap)
+
+                        // App bar
+                        with(detail_app_bar) {
+                            val bg = desc.thumbNail.apply {
+                                layoutParams.height = intrinsicHeight
+                            }
+
+                            with(detail_toolbar_layout) {
+                                title = desc.title
+                                background = bg
+                            }
+                        }
+                    }
+                }
+            })
+
+            getTwoPane().observe(owner, Observer {
+                it?.let { tp ->
+                    parentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(!tp)
+                }
+            })
         }
 
         return rootView
@@ -93,3 +104,4 @@ class ItemDetailFragment : Fragment() {
         const val ARG_TWO_PANE = "is_two_pane"
     }
 }
+

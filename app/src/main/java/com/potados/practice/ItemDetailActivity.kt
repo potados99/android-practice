@@ -15,23 +15,39 @@ import kotlinx.android.synthetic.main.fragment_bgmovie_detail.*
  */
 class ItemDetailActivity : AppCompatActivity() {
 
+    companion object {
+        var running: Boolean = false
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        running = true
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        running = false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
             // First time being loaded.
+            val id = intent.getIntExtra(ItemDetailFragment.ARG_ITEM_ID, 0)
+            val tp = intent.getBooleanExtra(ItemDetailFragment.ARG_TWO_PANE, false)
 
             val fragment = ItemDetailFragment().apply {
-                // New fragment.
                 arguments = Bundle().apply {
-                    // New bundle as an argument in the fragment.
-                    val id = intent.getIntExtra(ItemDetailFragment.ARG_ITEM_ID, -99)
                     putInt(ItemDetailFragment.ARG_ITEM_ID, id)
+                    putBoolean(ItemDetailFragment.ARG_TWO_PANE, tp)
                 }
             }
 
             supportFragmentManager
-                .beginTransaction() /* item_detail_container on itself(fragment_bgmovie_detail). */
+                .beginTransaction()
                 .add(android.R.id.content, fragment) /* setting content view */
                 .commit()
         }

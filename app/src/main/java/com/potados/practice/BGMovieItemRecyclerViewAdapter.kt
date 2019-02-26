@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.potados.practice.data.BGMovie
+import com.potados.practice.viewmodel.ItemDetailFragmentViewModel
 import kotlinx.android.synthetic.main.bgmovie_list_content.view.*
+import org.koin.android.viewmodel.ext.android.getViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class BGMovieItemRecyclerViewAdapter(
     private val parentActivity: ItemListActivity,
@@ -21,11 +24,8 @@ class BGMovieItemRecyclerViewAdapter(
 
         if (twoPane) {
             // Update fragment.
-
             val fragment = ItemDetailFragment().apply {
-                /* new fragment. */
                 arguments = Bundle().apply {
-                    /* new bundle as an argument in the fragment. */
                     putInt(ItemDetailFragment.ARG_ITEM_ID, item.id)
                     putBoolean(ItemDetailFragment.ARG_TWO_PANE, twoPane)
                 }
@@ -38,14 +38,18 @@ class BGMovieItemRecyclerViewAdapter(
         }
 
         else {
-            // Launch new activity.s
+            // Launch new activity.
+            if (!ItemDetailActivity.running) {
+                val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
+                    putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
+                    putExtra(ItemDetailFragment.ARG_TWO_PANE, twoPane)
+                }
 
-            val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
-                putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
+                v.context.startActivity(intent)
             }
-
-            v.context.startActivity(intent)
         }
+
+
     }
 
     /**

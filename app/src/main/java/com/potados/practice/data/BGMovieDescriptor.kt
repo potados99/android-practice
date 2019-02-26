@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import com.potados.practice.MyApp
 import com.potados.practice.R
 import java.util.*
+import kotlin.collections.ArrayList
 
 class BGMovieDescriptor(private val movie: BGMovie?) {
 
@@ -22,29 +23,8 @@ class BGMovieDescriptor(private val movie: BGMovie?) {
     val isNull: Boolean
         get() = (movie == null)
 
-    val fieldsList: List<String>
-        get() = ArrayList<String>().apply {
-            movie?.let {
-                with(it) {
-                    add("Title: $title")
-                    add("Description: $description")
-                    add("Duration: $duration")
-                }
-            }
-        }
-
-    val fieldsMap: Map<String, String>
-        get() = HashMap<String, String>().apply{
-            movie?.let {
-                with(it) {
-                    put("ID", id.toString())
-                    put("Title", title)
-                    put("Description", description)
-                    put("Filename", filename)
-                    put("Duration", "${duration.toMinutes()} minutes")
-                }
-            }
-        }
+    val title: String
+        get() = movie?.title ?: "NULL"
 
     val thumbNail: Drawable
         get() {
@@ -52,7 +32,18 @@ class BGMovieDescriptor(private val movie: BGMovie?) {
             TODO("Get thumbnail from file (movie.filename)")
         }
 
-    fun assertNonNull(): BGMovieDescriptor = if (isNull) BGMovieDescriptor(InvalidBGMovie.nullObject(-99)) else this
+    val fieldsMap: List<Map<String,String>>
+        get() = ArrayList<Map<String,String>>().apply{
+            movie?.let {
+                with(it) {
+                    add(mapOf(Pair("ID", id.toString())))
+                    add(mapOf(Pair("Title", title)))
+                    add(mapOf(Pair("Description", description)))
+                    add(mapOf(Pair("Filename", filename)))
+                    add(mapOf(Pair("Duration", "${duration.toMinutes()} minutes")))
+                }
+            }
+        }
 
-    override fun toString(): String = fieldsList.joinToString("\n")
+    fun assertNonNull(): BGMovieDescriptor = if (isNull) BGMovieDescriptor(InvalidBGMovie.nullObject(-99)) else this
 }

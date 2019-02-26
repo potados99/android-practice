@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.bgmovie_detail_list_content.view.*
 import kotlinx.android.synthetic.main.bgmovie_list_content.view.*
 import java.util.*
 
-class BGMovieDetailRecyclerViewAdapter(private val source: Map<String, String>)
+class BGMovieDetailRecyclerViewAdapter(private val source: List<Map<String, String>>)
     : RecyclerView.Adapter<BGMovieDetailRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,11 +20,11 @@ class BGMovieDetailRecyclerViewAdapter(private val source: Map<String, String>)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = source.entries.toList()[position]
+        val item = source[position]
 
         with(holder) {
-            keyView.text = item.key
-            valueView.text = item.value
+            keyView.text = item.keys.first() /* only on pair in each map. */
+            valueView.text = item.values.first()
         }
     }
 
