@@ -3,7 +3,6 @@ package com.potados.practice
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,8 @@ import android.view.ViewGroup
 import com.potados.practice.data.BGMovie
 import com.potados.practice.data.BGMovieDescriptor
 import com.potados.practice.data.BGMovieProvider
-import kotlinx.android.synthetic.main.activity_item_detail.view.*
-import kotlinx.android.synthetic.main.item_detail.view.*
+import kotlinx.android.synthetic.main.fragment_bgmovie_detail.view.*
+import kotlinx.android.synthetic.main.bgmovie_detail_content.view.*
 import org.koin.android.ext.android.inject
 
 /**
@@ -49,7 +48,7 @@ class ItemDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.activity_item_detail, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_bgmovie_detail, container, false)
 
         with(activity as AppCompatActivity) {
             setSupportActionBar(rootView.detail_toolbar)
@@ -61,9 +60,8 @@ class ItemDetailFragment : Fragment() {
 
                 // Item detail container
                 with(item_detail_container) {
-                    item_detail.text = it.toString()
+                    detail_list.adapter = BGMovieDetailRecyclerViewAdapter(it.fieldsMap)
                 }
-
                 // App bar
                 with(detail_app_bar) {
                     val bg = it.thumbNail.apply {

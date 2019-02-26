@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.potados.practice.data.BGMovie
-import kotlinx.android.synthetic.main.item_list_content.view.*
+import kotlinx.android.synthetic.main.bgmovie_list_content.view.*
 
-class SimpleItemRecyclerViewAdapter(
+class BGMovieItemRecyclerViewAdapter(
     private val parentActivity: ItemListActivity,
     private val source: List<BGMovie>,
     private val twoPane: Boolean
-) : RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<BGMovieItemRecyclerViewAdapter.ViewHolder>() {
 
     private val onClickListener = View.OnClickListener { v ->
         val item = v.tag as BGMovie /* selected item */
@@ -31,7 +31,7 @@ class SimpleItemRecyclerViewAdapter(
                 }
             }
 
-            parentActivity.supportFragmentManager /* item_detail_container on activity_item_list. */
+            parentActivity.supportFragmentManager /* item_detail_container on activity_bgmovie_list. */
                 .beginTransaction()
                 .replace(R.id.detail_fragment_container, fragment) // correct.
                 .commit()
@@ -53,7 +53,7 @@ class SimpleItemRecyclerViewAdapter(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_list_content, parent, false)
+            .inflate(R.layout.bgmovie_list_content, parent, false)
         return ViewHolder(view)
     }
 

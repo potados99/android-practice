@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_item_detail.*
+import kotlinx.android.synthetic.main.fragment_bgmovie_detail.*
 
 /**
  * An activity representing a single Item detail screen. This
@@ -31,7 +31,7 @@ class ItemDetailActivity : AppCompatActivity() {
             }
 
             supportFragmentManager
-                .beginTransaction() /* item_detail_container on itself(activity_item_detail). */
+                .beginTransaction() /* item_detail_container on itself(fragment_bgmovie_detail). */
                 .add(android.R.id.content, fragment) /* setting content view */
                 .commit()
         }

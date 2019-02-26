@@ -1,22 +1,14 @@
 package com.potados.practice
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.design.widget.Snackbar
-import android.support.design.widget.VisibilityAwareImageButton
-import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.ViewGroup
-import android.widget.TextView
-import com.potados.practice.data.BGMovie
 import com.potados.practice.data.BGMovieProvider
 
-import kotlinx.android.synthetic.main.activity_item_list.*
-import kotlinx.android.synthetic.main.item_list_content.view.*
-import kotlinx.android.synthetic.main.item_list.*
+import kotlinx.android.synthetic.main.activity_bgmovie_list.*
+import kotlinx.android.synthetic.main.bgmovie_list.*
 import org.koin.android.ext.android.inject
 
 /**
@@ -38,7 +30,7 @@ class ItemListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_list)
+        setContentView(R.layout.activity_bgmovie_list)
         setSupportActionBar(toolbar)
 
         toolbar.title = title
@@ -53,7 +45,7 @@ class ItemListActivity : AppCompatActivity() {
             }
             else {
                 // Wide screen.
-                // info_fab.visibility = View.INVISIBLE
+                info_fab.visibility = View.INVISIBLE
             }
         }
 
@@ -61,6 +53,6 @@ class ItemListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, provider.moviesInList, twoPane)
+        recyclerView.adapter = BGMovieItemRecyclerViewAdapter(this, provider.moviesInList, twoPane)
     }
 }

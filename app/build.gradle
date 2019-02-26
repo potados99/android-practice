@@ -39,4 +39,5 @@ dependencies {
     implementation "org.koin:koin-android:1.0.2"
     implementation "org.koin:koin-android-scope:1.0.2"
     implementation "org.koin:koin-android-viewmodel:1.0.2"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

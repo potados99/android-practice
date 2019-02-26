@@ -3,6 +3,7 @@ package com.potados.practice.data
 import android.graphics.drawable.Drawable
 import com.potados.practice.MyApp
 import com.potados.practice.R
+import java.util.*
 
 class BGMovieDescriptor(private val movie: BGMovie?) {
 
@@ -28,6 +29,19 @@ class BGMovieDescriptor(private val movie: BGMovie?) {
                     add("Title: $title")
                     add("Description: $description")
                     add("Duration: $duration")
+                }
+            }
+        }
+
+    val fieldsMap: Map<String, String>
+        get() = HashMap<String, String>().apply{
+            movie?.let {
+                with(it) {
+                    put("ID", id.toString())
+                    put("Title", title)
+                    put("Description", description)
+                    put("Filename", filename)
+                    put("Duration", "${duration.toMinutes()} minutes")
                 }
             }
         }
