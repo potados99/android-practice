@@ -18,7 +18,6 @@ class ItemDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         if (savedInstanceState == null) {
             // First time being loaded.
 

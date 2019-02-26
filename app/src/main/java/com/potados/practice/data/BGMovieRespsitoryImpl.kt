@@ -1,13 +1,16 @@
 package com.potados.practice.data
 
-import java.time.Duration
+class BGMovieRepositoryImpl(val storagePath: String) : BGMovieRepository {
 
-class BGMovieRespsitoryImpl(val storagePath: String) : BGMovieRepository {
-
-    val items_list: MutableList<BGMovie> = ArrayList() /* empty declaration. */
-    val items_map: MutableMap<Int, BGMovie> = HashMap()
+    private val itemsList: MutableList<BGMovie> = ArrayList() /* empty declaration. */
+    private val itemsMap: MutableMap<Int, BGMovie> = HashMap()
 
     init {
+        update()
+    }
+
+    override fun update() {
+        clear()
         for (i in 1..20) {
             addItem(BGMovie(
                 id = i,
@@ -19,20 +22,25 @@ class BGMovieRespsitoryImpl(val storagePath: String) : BGMovieRepository {
     }
 
     override fun getById(id: Int): BGMovie {
-        return items_map[id] ?: EmptyBGMovie.fileNotFound
+        return itemsMap[id] ?: EmptyBGMovie.fileNotFound
     }
 
     override fun getAllList(): List<BGMovie> {
-        return items_list
+        return itemsList
     }
 
     override fun getAllMap(): Map<Int, BGMovie> {
-        return items_map
+        return itemsMap
+    }
+
+    private fun clear() {
+        itemsList.clear()
+        itemsMap.clear()
     }
 
     private fun addItem(item: BGMovie) {
-        items_list.add(item)
-        items_map[item.id] = item
+        itemsList.add(item)
+        itemsMap[item.id] = item
     }
 
 }

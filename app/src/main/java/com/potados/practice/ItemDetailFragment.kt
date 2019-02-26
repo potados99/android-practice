@@ -1,6 +1,5 @@
 package com.potados.practice
 
-import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -10,11 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.potados.practice.data.BGMovie
-import com.potados.practice.data.BGMovieDescripter
+import com.potados.practice.data.BGMovieDescriptor
 import com.potados.practice.data.BGMovieProvider
-import com.potados.practice.data.BGMovieRespsitoryImpl
 import kotlinx.android.synthetic.main.activity_item_detail.view.*
 import kotlinx.android.synthetic.main.item_detail.view.*
+import org.koin.android.ext.android.inject
 
 /**
  * A fragment representing a single Item detail screen.
@@ -25,7 +24,7 @@ import kotlinx.android.synthetic.main.item_detail.view.*
 class ItemDetailFragment : Fragment() {
 
     private var item: BGMovie? = null
-    private val provider: BGMovieProvider = BGMovieProvider(BGMovieRespsitoryImpl("hey"))
+    private val provider: BGMovieProvider by inject()
     private var twoPane: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,16 +58,22 @@ class ItemDetailFragment : Fragment() {
 
         with(rootView) {
             item?.let {
-                item_detail_container.item_detail.text = BGMovieDescripter(item).getDetailsString()
+                item_detail_container.item_detail.text = BGMovieDescriptor(item).toString()
+
                 with(detail_app_bar) {
+
+                    val bg = ContextCompat.getDrawable(
+                        appCompatActivity.applicationContext,
+                        R.drawable.forest
+                    )?.apply {
+                        layoutParams.height = intrinsicHeight
+                    }
+
                     with (detail_toolbar_layout) {
                         title = item?.title ?: "NULL"
-                        background = ContextCompat.getDrawable(
-                            appCompatActivity.applicationContext,
-                            R.drawable.screenshot
-                        )
+                        background = bg
                     }
-                    layoutParams.height = 900
+
                 }
             }
             fab.setOnClickListener { view ->

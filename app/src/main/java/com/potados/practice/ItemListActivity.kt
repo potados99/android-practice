@@ -13,11 +13,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.potados.practice.data.BGMovie
 import com.potados.practice.data.BGMovieProvider
-import com.potados.practice.data.BGMovieRespsitoryImpl
 
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list_content.view.*
 import kotlinx.android.synthetic.main.item_list.*
+import org.koin.android.ext.android.inject
 
 /**
  * An activity representing a list of Pings. This activity
@@ -34,7 +34,7 @@ class ItemListActivity : AppCompatActivity() {
      * device.
      */
     private var twoPane: Boolean = false
-    private val provider = BGMovieProvider(BGMovieRespsitoryImpl("hey"))
+    private val provider: BGMovieProvider by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,7 @@ class ItemListActivity : AppCompatActivity() {
             }
             else {
                 // Wide screen.
-                info_fab.visibility = View.INVISIBLE
+                // info_fab.visibility = View.INVISIBLE
             }
         }
 
