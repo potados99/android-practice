@@ -11,6 +11,9 @@ import com.potados.practice.viewmodel.ItemDetailFragmentViewModel
 import kotlinx.android.synthetic.main.activity_bgmovie_list.*
 import kotlinx.android.synthetic.main.bgmovie_list.*
 import org.koin.android.ext.android.inject
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
+
 
 class ItemListActivity : AppCompatActivity() {
 
@@ -46,6 +49,11 @@ class ItemListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView, twoPane: Boolean) {
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                recyclerView.context,
+                LinearLayoutManager(this).orientation
+            ))
         recyclerView.adapter = BGMovieItemRecyclerViewAdapter(this, provider.moviesInList, twoPane)
     }
 }

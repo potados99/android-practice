@@ -6,4 +6,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="item_list_content_font_size">20sp</dimen>
     <dimen name="item_list_content_index_width">40dp</dimen>
+    <dimen name="list_item_height">48dp</dimen>
 </resources>

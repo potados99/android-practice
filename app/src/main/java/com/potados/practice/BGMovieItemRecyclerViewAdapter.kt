@@ -65,6 +65,7 @@ class BGMovieItemRecyclerViewAdapter(
 
             itemView.tag = item
             itemView.setOnClickListener(onClickListener)
+
         }
     }
 
