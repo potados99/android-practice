@@ -45,15 +45,12 @@ class BGMovieRepositoryImpl(val storagePath: String) : BGMovieRepository {
                 title = "Item with id $i",
                 description = "Test dummy data at $i!",
                 filename = "blah_blah_at_$i.Bagua",
-                duration = Duration.ofSeconds(45))
+                duration = Duration.ofSeconds(300))
             )
         }
     }
 }
 
-/**
- * Null alternative.
- */
 object InvalidBGMovie {
     private fun invalidObject(id: Int, description: String) =
         BGMovie(

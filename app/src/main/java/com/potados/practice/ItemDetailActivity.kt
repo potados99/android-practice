@@ -35,20 +35,9 @@ class ItemDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            // First time being loaded.
-            val id = intent.getIntExtra(ItemDetailFragment.ARG_ITEM_ID, 0)
-            val tp = intent.getBooleanExtra(ItemDetailFragment.ARG_TWO_PANE, false)
-
-            val fragment = ItemDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ItemDetailFragment.ARG_ITEM_ID, id)
-                    putBoolean(ItemDetailFragment.ARG_TWO_PANE, tp)
-                }
-            }
-
             supportFragmentManager
                 .beginTransaction()
-                .add(android.R.id.content, fragment) /* setting content view */
+                .add(android.R.id.content, ItemDetailFragment()) /* setting content view */
                 .commit()
         }
     }

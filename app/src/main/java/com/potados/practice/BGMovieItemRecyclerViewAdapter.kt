@@ -10,60 +10,52 @@ import android.widget.TextView
 import com.potados.practice.data.BGMovie
 import com.potados.practice.viewmodel.ItemDetailFragmentViewModel
 import kotlinx.android.synthetic.main.bgmovie_list_content.view.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
 class BGMovieItemRecyclerViewAdapter(
     private val parentActivity: ItemListActivity,
     private val source: List<BGMovie>,
     private val twoPane: Boolean
-) : RecyclerView.Adapter<BGMovieItemRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<BGMovieItemRecyclerViewAdapter.ViewHolder>(),
+    KoinComponent {
 
-    private val onClickListener = View.OnClickListener { v ->
-        val item = v.tag as BGMovie /* selected item */
+    private val vm: ItemDetailFragmentViewModel by inject() /* to share global.. no better idea.. :( */
+
+    private val onClickListener = View.OnClickListener { view ->
+        val item = view.tag as BGMovie /* selected item */
+
+        with(vm) {
+            setItemId(item.id)
+        }
 
         if (twoPane) {
             // Update fragment.
-            val fragment = ItemDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ItemDetailFragment.ARG_ITEM_ID, item.id)
-                    putBoolean(ItemDetailFragment.ARG_TWO_PANE, twoPane)
-                }
-            }
-
-            parentActivity.supportFragmentManager /* item_detail_container on activity_bgmovie_list. */
+            parentActivity.supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.detail_fragment_container, fragment) // correct.
+                .replace(R.id.detail_fragment_container, ItemDetailFragment())
                 .commit()
         }
 
         else {
             // Launch new activity.
-            if (!ItemDetailActivity.running) {
-                val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
-                    putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
-                    putExtra(ItemDetailFragment.ARG_TWO_PANE, twoPane)
+            if (!ItemDetailActivity.running)
+                view.context.let {
+                    it.startActivity(Intent(it, ItemDetailActivity::class.java))
                 }
-
-                v.context.startActivity(intent)
-            }
         }
-
-
     }
 
-    /**
-     * Create view holder
-     */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.bgmovie_list_content, parent, false)
-        return ViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(
+            LayoutInflater
+                .from(parent.context)
+                .inflate(R.layout.bgmovie_list_content, parent, false)
+        )
 
-    /**
-     * The created holder (ViewHolder)
-     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = source[position]
 
@@ -71,10 +63,8 @@ class BGMovieItemRecyclerViewAdapter(
             idView.text = item.id.toString()
             contentView.text = item.title
 
-            with(itemView) {
-                tag = item /* tag of each cell is the item (BGMovie) */
-                setOnClickListener(onClickListener)
-            }
+            itemView.tag = item
+            itemView.setOnClickListener(onClickListener)
         }
     }
 

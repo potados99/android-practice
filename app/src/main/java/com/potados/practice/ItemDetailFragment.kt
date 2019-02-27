@@ -28,22 +28,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class ItemDetailFragment() : Fragment() {
 
-    private val vm by viewModel<ItemDetailFragmentViewModel>()
     private val parentActivity by lazy { activity as AppCompatActivity }
+    private val vm: ItemDetailFragmentViewModel by inject() /* to share global.. no better idea.. :( */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            with(vm) {
-                if (it.containsKey(ARG_ITEM_ID)) {
-                    setItemId(it.getInt(ARG_ITEM_ID))
-                }
-                if (it.containsKey(ARG_TWO_PANE)) {
-                    setTwoPane(it.getBoolean(ARG_TWO_PANE))
-                }
-            }
-        }
     }
 
     /**
@@ -53,43 +42,47 @@ class ItemDetailFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_bgmovie_detail,
-            container, false).apply {
+        val rootView = inflater.inflate(R.layout.fragment_bgmovie_detail, container, false)
+
+        with (rootView) {
             fab.setOnClickListener { view ->
-                Snackbar.make(view, "Play go go!", Snackbar.LENGTH_LONG)
+                Snackbar
+                    .make(view, "Play go go!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
             }
+
             parentActivity.setSupportActionBar(detail_toolbar)
         }
 
         with(vm) {
             val owner = this@ItemDetailFragment
 
-            getDescriptor().observe(owner, Observer {
-                it?.let { desc ->
-                    with(rootView) {
-                        detail_list.adapter = BGMovieDetailRecyclerViewAdapter(desc.fieldsMap)
+            getTwoPane().observe(owner, Observer { it?.let { tp ->
+                parentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(!tp)
+            }})
 
-                        // App bar
-                        with(detail_app_bar) {
-                            val bg = desc.thumbNail.apply {
-                                layoutParams.height = intrinsicHeight
-                            }
+            /**
+             * Both getDescriptor() and getAdapter() could be replaced with getItemId()
+             * because those are dependent on the id.
+             * It would be a better choice to reduce observer for performance(maybe)
+             * BUT placing observer for every is more visible and intuitive.
+             * Items of view model used in this fragment MUST have its own observer.
+             */
 
-                            with(detail_toolbar_layout) {
-                                title = desc.title
-                                background = bg
-                            }
-                        }
-                    }
+            // getItemId()... is not directly used in this fragment.
+
+            getDescriptor().observe(owner, Observer { it?.let { desc ->
+                with(rootView) {
+                    detail_app_bar.layoutParams.height = desc.thumbNail.intrinsicHeight
+                    detail_toolbar_layout.title = desc.title
+                    detail_toolbar_layout.background = desc.thumbNail
                 }
-            })
+            }})
 
-            getTwoPane().observe(owner, Observer {
-                it?.let { tp ->
-                    parentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(!tp)
-                }
-            })
+            getAdapter().observe(owner, Observer { it?.let { adapter ->
+                rootView.detail_list.adapter = adapter
+            }})
+
         }
 
         return rootView
