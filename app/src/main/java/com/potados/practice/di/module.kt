@@ -11,7 +11,7 @@ import org.koin.dsl.module.module
 
 val appModule: Module = module {
     single {
-        BGMovieRepositoryImpl("hey") as BGMovieRepository /* the provider takes type of interface. */
+        BGMovieRepositoryImpl() as BGMovieRepository /* the provider takes type of interface. */
     }
 
     single {

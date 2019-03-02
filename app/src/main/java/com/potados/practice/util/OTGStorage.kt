@@ -14,11 +14,15 @@ import java.io.InputStreamReader
 import java.lang.Exception
 import java.nio.Buffer
 
-class OTGStorage {
-    fun getVolumes(): List<StorageVolume>? {
-        val context = Application()?.applicationContext
-        val manager = context?.getSystemService(StorageManager::class.java)
+object OTGStorage {
 
-        return manager?.storageVolumes
+    // /mnt/media_rw/0FFC-2B18
+    // /storage/emulated/0
+
+    private val tokens = listOf("USBstorage1", "USBstorage2", "UsbDriveA", "UsbDriveB",
+        "emulated") /* test */
+
+    fun getVolumes(): List<String> = VolumeManager.getStorageSet().toList().filter {
+        it.removePrefix("/storage/").split("/").first() in tokens
     }
 }

@@ -1,7 +1,11 @@
 package com.potados.practice
 
+import android.os.Environment
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import android.util.Log
+import com.potados.practice.util.OTGStorage
+import com.potados.practice.util.VolumeManager
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,5 +24,14 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
         assertEquals("com.potados.practice", appContext.packageName)
+
+        Log.d("LOOOOOOOK!!!", "Start")
+        for (i in OTGStorage.getVolumes()) {
+            Log.d("YA", i)
+        }
+        Log.d("LOOOOOOOK!!!", "End")
+
+
+
     }
 }

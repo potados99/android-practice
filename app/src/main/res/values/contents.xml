@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="content_start_id">1</integer>
+    <integer name="contents_count">7</integer>
+
+    <string name="id_1_type_plane">Hello world!</string>
+    <string name="id_1_type_encrypted">ABCD</string>
+
+    <string name="id_2_type_plane">Lorem ipsum</string>
+    <string name="id_2_type_encrypted">EFGH</string>
+
+    <string name="id_3_type_plane">Dolor amit</string>
+    <string name="id_3_type_encrypted">IJKL</string>
+
+    <string name="id_4_type_plane">Dummy swag</string>
+    <string name="id_4_type_encrypted">MNOP</string>
+
+    <string name="id_5_type_plane">Ooh ya</string>
+    <string name="id_5_type_encrypted">QRST</string>
+
+    <string name="id_6_type_plane">Check it</string>
+    <string name="id_6_type_encrypted">UVWX</string>
+
+    <string name="id_7_type_plane">Hey man!</string>
+    <string name="id_7_type_encrypted">YZAB</string>
+</resources>

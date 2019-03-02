@@ -7,7 +7,6 @@ import com.potados.practice.BGMovieDetailRecyclerViewAdapter
 import com.potados.practice.data.BGMovie
 import com.potados.practice.data.BGMovieDescriptor
 import com.potados.practice.data.BGMovieProvider
-import com.potados.practice.data.InvalidBGMovie
 import org.koin.android.ext.android.inject
 
 

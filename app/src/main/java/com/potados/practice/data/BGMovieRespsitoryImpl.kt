@@ -1,8 +1,11 @@
 package com.potados.practice.data
 
+import android.content.res.Resources
+import com.potados.practice.MyApp
+import com.potados.practice.R
 import java.time.Duration
 
-class BGMovieRepositoryImpl(val storagePath: String) : BGMovieRepository {
+class BGMovieRepositoryImpl() : BGMovieRepository {
 
     private val itemsList: MutableList<BGMovie> = ArrayList() /* empty declaration. */
     private val itemsMap: MutableMap<Int, BGMovie> = HashMap()
@@ -13,7 +16,7 @@ class BGMovieRepositoryImpl(val storagePath: String) : BGMovieRepository {
 
     override fun update() {
         clear()
-        getMoviesFromStorage()
+        getFromResource()
     }
 
     override fun getById(id: Int): BGMovie {
@@ -38,17 +41,37 @@ class BGMovieRepositoryImpl(val storagePath: String) : BGMovieRepository {
         itemsMap[item.id] = item
     }
 
-    private fun getMoviesFromStorage() {
-        for (i in 1..20) {
-            addItem(BGMovie(
-                id = i,
-                title = "Item with id $i",
-                description = "Test dummy data at $i!",
-                filename = "blah_blah_at_$i.Bagua",
-                duration = Duration.ofSeconds(300))
+    private fun getFromResource() {
+        for (i in contentStartId..contentsCount) {
+            addItem(
+                BGMovie(
+                    id = i,
+                    title = getStringByIdString("id_${i}_type_plane"),
+                    description = "Hey $i square is ${i*i}.",
+                    filename = "${getStringByIdString("id_${i}_type_encrypted")}.Bagua",
+                    duration = Duration.ofSeconds(300)
+                )
             )
         }
     }
+
+    private fun getStringByIdString(id: String): String {
+        val context = MyApp.context
+        val pack = context.packageName
+        val res = context.resources
+
+        with(res) {
+            return res.getString(
+                getIdentifier(id, "string", pack)
+            )
+        }
+    }
+
+    private val contentStartId: Int
+        get() = MyApp.context.resources.getInteger(R.integer.content_start_id)
+
+    private val contentsCount: Int
+        get() = MyApp.context.resources.getInteger(R.integer.contents_count)
 }
 
 object InvalidBGMovie {
