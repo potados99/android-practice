@@ -1,6 +1,8 @@
 package com.potados.practice.data
 
+import android.content.Context
 import android.content.res.Resources
+import android.os.storage.StorageManager
 import com.potados.practice.MyApp
 import com.potados.practice.R
 import java.time.Duration
@@ -50,6 +52,30 @@ class BGMovieRepositoryImpl() : BGMovieRepository {
                     description = "Hey $i square is ${i*i}.",
                     filename = "${getStringByIdString("id_${i}_type_encrypted")}.Bagua",
                     duration = Duration.ofSeconds(300)
+                )
+            )
+        }
+
+        addItem(
+            BGMovie(
+                id = 99,
+                title = "** Under are storage volumes** ",
+                description = "hi.",
+                filename = "d",
+                duration = Duration.ZERO
+            )
+        )
+
+        val storageMgr = MyApp.context.getSystemService(Context.STORAGE_SERVICE) as StorageManager
+        val vols = storageMgr.storageVolumes
+        for (v in vols) {
+            addItem(
+                BGMovie(
+                    id = 0,
+                    title = v.uuid ?: "UUID unresolved.",
+                    description = v.getDescription(MyApp.context) ?: "Description Unresolved.",
+                    filename = "d",
+                    duration = Duration.ZERO
                 )
             )
         }
