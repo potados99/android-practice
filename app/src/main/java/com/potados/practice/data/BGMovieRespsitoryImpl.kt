@@ -3,6 +3,7 @@ package com.potados.practice.data
 import android.content.Context
 import android.content.res.Resources
 import android.os.storage.StorageManager
+import android.os.storage.StorageVolume
 import com.potados.practice.MyApp
 import com.potados.practice.R
 import java.time.Duration
@@ -68,12 +69,18 @@ class BGMovieRepositoryImpl() : BGMovieRepository {
 
         val storageMgr = MyApp.context.getSystemService(Context.STORAGE_SERVICE) as StorageManager
         val vols = storageMgr.storageVolumes
+
         for (v in vols) {
             addItem(
                 BGMovie(
-                    id = 0,
+                    id = v.hashCode() % 1000,
                     title = v.uuid ?: "UUID unresolved.",
-                    description = v.getDescription(MyApp.context) ?: "Description Unresolved.",
+                    description =
+                    (v.getDescription(MyApp.context) ?: "description unresolved") + ", " +
+                    (if (v.isEmulated) "emulated" else "not emulated") + ", " +
+                    (if (v.isPrimary) "primary" else "not primary") + ", " +
+                    (if (v.isRemovable) "removable" else "not removable") + ", " +
+                    v.state,
                     filename = "d",
                     duration = Duration.ZERO
                 )

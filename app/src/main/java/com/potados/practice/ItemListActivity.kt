@@ -1,5 +1,7 @@
 package com.potados.practice
 
+import android.content.Context
+import android.hardware.usb.UsbManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -13,6 +15,7 @@ import kotlinx.android.synthetic.main.bgmovie_list.*
 import org.koin.android.ext.android.inject
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Toast
 
 
 class ItemListActivity : AppCompatActivity() {
@@ -46,7 +49,18 @@ class ItemListActivity : AppCompatActivity() {
         }
 
         setupRecyclerView(item_list, twoPane)
+
+
+        //val f = this.getExternalFilesDirs(null)
+        //Toast.makeText(this, "total ${f?.size.toString()}: " + f[0]?.path ?: "no path", Toast.LENGTH_LONG).show()
+
+        // Toast.makeText(this, StorageVolumeExp.getPath(this), Toast.LENGTH_LONG).show()
+
+        val usbmgr = getSystemService(Context.USB_SERVICE) as UsbManager
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+
     }
+
 
     private fun setupRecyclerView(recyclerView: RecyclerView, twoPane: Boolean) {
         recyclerView.addItemDecoration(
@@ -56,4 +70,5 @@ class ItemListActivity : AppCompatActivity() {
             ))
         recyclerView.adapter = BGMovieItemRecyclerViewAdapter(this, provider.moviesInList, twoPane)
     }
+
 }
