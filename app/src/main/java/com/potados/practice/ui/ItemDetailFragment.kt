@@ -1,7 +1,6 @@
-package com.potados.practice
+package com.potados.practice.ui
 
 import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -9,16 +8,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.potados.practice.data.BGMovie
-import com.potados.practice.data.BGMovieDescriptor
-import com.potados.practice.data.BGMovieProvider
-import com.potados.practice.model.ItemDetailFragmentModel
+import com.potados.practice.R
 import com.potados.practice.viewmodel.ItemDetailFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_bgmovie_detail.view.*
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.getViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * A fragment representing a single Item detail screen.

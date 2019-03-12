@@ -5,6 +5,7 @@ import android.os.storage.StorageManager
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import android.util.Log
+import com.potados.practice.util.LineReader
 import com.potados.practice.util.OTGStorage
 import com.potados.practice.util.VolumeManager
 
@@ -24,17 +25,9 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.potados.practice", appContext.packageName)
-
-        Log.i("LOOOOOOOK!!!", "Start")
-        for (i in OTGStorage.getVolumes()) {
-            Log.d("YA", i)
+        LineReader(R.raw.movies).lines.forEach {
+            Log.i("Hey Look: ", it)
         }
-        Log.i("============", "============")
-
-        Log.i("LOOOOOOOK!!!", "End")
-
-
 
     }
 }

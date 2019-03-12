@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".ItemDetailActivity"
+        tools:context=".ui.ItemDetailActivity"
         tools:ignore="MergeRootFrame" android:id="@+id/detail_root_layout">
 
     <android.support.design.widget.AppBarLayout
@@ -51,7 +51,7 @@
                                                 android:layout_marginLeft="8dp"
                                                 android:layout_marginRight="8dp"
                                                 app:layoutManager="LinearLayoutManager"
-                                                tools:context=".ItemDetailFragment"
+                                                tools:context=".ui.ItemDetailFragment"
                                                 tools:listitem="@layout/bgmovie_detail_list_content"
         />
 

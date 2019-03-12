@@ -1,11 +1,9 @@
-package com.potados.practice
+package com.potados.practice.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.fragment_bgmovie_detail.*
 
 /**
  * An activity representing a single Item detail screen. This

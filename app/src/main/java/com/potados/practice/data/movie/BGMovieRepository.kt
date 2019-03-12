@@ -1,4 +1,4 @@
-package com.potados.practice.data
+package com.potados.practice.data.movie
 
 interface BGMovieRepository {
     fun update()

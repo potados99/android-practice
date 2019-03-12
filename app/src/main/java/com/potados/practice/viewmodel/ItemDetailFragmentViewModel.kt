@@ -3,11 +3,9 @@ package com.potados.practice.viewmodel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.potados.practice.BGMovieDetailRecyclerViewAdapter
-import com.potados.practice.data.BGMovie
-import com.potados.practice.data.BGMovieDescriptor
-import com.potados.practice.data.BGMovieProvider
-import org.koin.android.ext.android.inject
+import com.potados.practice.ui.BGMovieDetailRecyclerViewAdapter
+import com.potados.practice.data.movie.BGMovieDescriptor
+import com.potados.practice.data.movie.BGMovieProvider
 
 
 class ItemDetailFragmentViewModel(private val provider: BGMovieProvider) : ViewModel() {
@@ -57,7 +55,8 @@ class ItemDetailFragmentViewModel(private val provider: BGMovieProvider) : ViewM
     fun getAdapter(): LiveData<BGMovieDetailRecyclerViewAdapter> =
         adapter.apply {
             descriptor.value?.let { desc ->
-                value = BGMovieDetailRecyclerViewAdapter(desc.fieldsMap) /* No adapter for null. */
+                value =
+                    BGMovieDetailRecyclerViewAdapter(desc.fieldsMap) /* No adapter for null. */
             }
         }
 

@@ -1,14 +1,12 @@
-package com.potados.practice
+package com.potados.practice.ui
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.potados.practice.data.BGMovie
+import com.potados.practice.R
 import kotlinx.android.synthetic.main.bgmovie_detail_list_content.view.*
-import kotlinx.android.synthetic.main.bgmovie_list_content.view.*
-import java.util.*
 
 class BGMovieDetailRecyclerViewAdapter(private val source: List<Map<String, String>>)
     : RecyclerView.Adapter<BGMovieDetailRecyclerViewAdapter.ViewHolder>() {

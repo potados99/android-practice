@@ -1,13 +1,11 @@
-package com.potados.practice
+package com.potados.practice.ui
 
-import android.content.Context
-import android.hardware.usb.UsbManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.design.widget.Snackbar
 import android.view.View
-import com.potados.practice.data.BGMovieProvider
+import com.potados.practice.data.movie.BGMovieProvider
 import com.potados.practice.viewmodel.ItemDetailFragmentViewModel
 
 import kotlinx.android.synthetic.main.activity_bgmovie_list.*
@@ -16,11 +14,14 @@ import org.koin.android.ext.android.inject
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
+import com.potados.practice.R
+import com.potados.practice.data.storage.StorageInfoProvider
 
 
 class ItemListActivity : AppCompatActivity() {
 
-    private val provider: BGMovieProvider by inject()
+    private val movieProvider: BGMovieProvider by inject()
+    private val storageProvider: StorageInfoProvider by inject()
     private val vm: ItemDetailFragmentViewModel by inject() /* to share global.. no better idea.. :( */
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,9 +57,11 @@ class ItemListActivity : AppCompatActivity() {
 
         // Toast.makeText(this, StorageVolumeExp.getPath(this), Toast.LENGTH_LONG).show()
 
-        val usbmgr = getSystemService(Context.USB_SERVICE) as UsbManager
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+        // val usbmgr = getSystemService(Context.USB_SERVICE) as UsbManager
+        // Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
 
+        val has = storageProvider.hasUuid("0FFC-2B18")
+        Toast.makeText(this, "has 0FFC-2B18? " + (if (has) "yes" else "no") , Toast.LENGTH_LONG).show()
     }
 
 
@@ -68,7 +71,8 @@ class ItemListActivity : AppCompatActivity() {
                 recyclerView.context,
                 LinearLayoutManager(this).orientation
             ))
-        recyclerView.adapter = BGMovieItemRecyclerViewAdapter(this, provider.moviesInList, twoPane)
+        recyclerView.adapter =
+            BGMovieItemRecyclerViewAdapter(this, movieProvider.moviesInList, twoPane)
     }
 
 }

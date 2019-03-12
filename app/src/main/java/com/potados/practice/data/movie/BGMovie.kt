@@ -1,4 +1,4 @@
-package com.potados.practice.data
+package com.potados.practice.data.movie
 
 import java.time.Duration
 

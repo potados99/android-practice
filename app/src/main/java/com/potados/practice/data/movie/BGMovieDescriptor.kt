@@ -1,10 +1,9 @@
-package com.potados.practice.data
+package com.potados.practice.data.movie
 
 import android.graphics.drawable.Drawable
 import com.potados.practice.MyApp
 import com.potados.practice.R
 import java.time.Duration
-import java.util.*
 import kotlin.collections.ArrayList
 
 class BGMovieDescriptor(private val movie: BGMovie?) {
@@ -15,7 +14,6 @@ class BGMovieDescriptor(private val movie: BGMovie?) {
             // others..
 
             return true
-            TODO("Validation check here")
         }
 
     val isNull: Boolean
@@ -33,7 +31,6 @@ class BGMovieDescriptor(private val movie: BGMovie?) {
     val thumbNail: Drawable
         get() {
             return MyApp.context.getDrawable(R.drawable.forest) ?: MyApp.context.getDrawable(R.drawable.nullsorry)!!
-            TODO("Get thumbnail from file (movie.filename)")
         }
 
     val fieldsMap: List<Map<String,String>>
@@ -46,7 +43,11 @@ class BGMovieDescriptor(private val movie: BGMovie?) {
         }
 
     fun assertNonNull(): BGMovieDescriptor =
-        if (isNull) BGMovieDescriptor(InvalidBGMovie.nullObject(-99)) else this
+        if (isNull) BGMovieDescriptor(
+            InvalidBGMovie.nullObject(
+                -99
+            )
+        ) else this
 
     companion object {
         const val NULL_INT = 0

@@ -1,18 +1,15 @@
-package com.potados.practice
+package com.potados.practice.ui
 
 import android.content.Intent
-import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.potados.practice.data.BGMovie
+import com.potados.practice.R
+import com.potados.practice.data.movie.BGMovie
 import com.potados.practice.viewmodel.ItemDetailFragmentViewModel
 import kotlinx.android.synthetic.main.bgmovie_list_content.view.*
-import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.getViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -36,7 +33,10 @@ class BGMovieItemRecyclerViewAdapter(
             // Update fragment.
             parentActivity.supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.detail_fragment_container, ItemDetailFragment())
+                .replace(
+                    R.id.detail_fragment_container,
+                    ItemDetailFragment()
+                )
                 .commit()
         }
 

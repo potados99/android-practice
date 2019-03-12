@@ -1,4 +1,4 @@
-package com.potados.practice.data
+package com.potados.practice.data.movie
 
 class BGMovieProvider(private val repository: BGMovieRepository) {
     val moviesInList: List<BGMovie>
