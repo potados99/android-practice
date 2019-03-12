@@ -50,18 +50,6 @@ class ItemListActivity : AppCompatActivity() {
         }
 
         setupRecyclerView(item_list, twoPane)
-
-
-        //val f = this.getExternalFilesDirs(null)
-        //Toast.makeText(this, "total ${f?.size.toString()}: " + f[0]?.path ?: "no path", Toast.LENGTH_LONG).show()
-
-        // Toast.makeText(this, StorageVolumeExp.getPath(this), Toast.LENGTH_LONG).show()
-
-        // val usbmgr = getSystemService(Context.USB_SERVICE) as UsbManager
-        // Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
-
-        val has = storageProvider.hasUuid("0FFC-2B18")
-        Toast.makeText(this, "has 0FFC-2B18? " + (if (has) "yes" else "no") , Toast.LENGTH_LONG).show()
     }
 
 

@@ -25,8 +25,8 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        LineReader(R.raw.movies).lines.forEach {
-            Log.i("Hey Look: ", it)
+        OTGStorage.getVolumes().forEach {
+            Log.i("Hey Look ###### : ", it)
         }
 
     }

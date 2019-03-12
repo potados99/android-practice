@@ -9,20 +9,23 @@ class LineReader(private val dataFileId: Int) {
     private val c = MyApp.context
     private val r = c.resources
 
-    val lines: List<String>
-        get() {
-            var list: List<String>
-
-            try {
-                val inputStream = r.openRawResource(dataFileId)
-                val reader = BufferedReader(InputStreamReader(inputStream))
-
-                list = reader.readLines()
-            }
-            catch (exception: Exception) {
-                list = ArrayList() /* empty list */
-            }
-
-            return list
+    val fileExists: Boolean
+        get() = try {
+            r.openRawResource(dataFileId)
+            true
+        } catch (exception: Exception) {
+            false
         }
+
+    val lines: List<String>
+        get() = try {
+            val inputStream = r.openRawResource(dataFileId)
+            val reader = BufferedReader(InputStreamReader(inputStream))
+
+            reader.readLines()
+        }
+        catch (exception: Exception) {
+            ArrayList() /* empty list */
+        }
+
 }

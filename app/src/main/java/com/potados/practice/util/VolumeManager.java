@@ -15,15 +15,15 @@ import java.util.regex.Pattern;
  */
 public class VolumeManager {
     public static HashSet<String> getStorageSet(){
-        HashSet<String> storageSet = new HashSet();
-        // storageSet.addAll(getStorageSet(new File("/system/etc/vold.fstab"), true));
-        // "/system/etc/vold.fstab" no exist (on emulator)
+        HashSet<String> storageSet = new HashSet<String>();
         storageSet.addAll(getStorageSet(new File("/proc/mounts"), false));
+        // storageSet.addAll(getStorageSet(new File("/system/etc/vold.fstab"), true));
 
-        if (storageSet == null || storageSet.isEmpty()) {
+        if (storageSet.isEmpty()) {
             storageSet = new HashSet<String>();
             storageSet.add(Environment.getExternalStorageDirectory().getAbsolutePath());
         }
+
         return storageSet;
     }
 

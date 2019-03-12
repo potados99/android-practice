@@ -5,6 +5,10 @@ import com.potados.practice.util.LineReader
 import java.lang.Exception
 import java.time.Duration
 
+/**
+ * Provide collection of BGMovie, based on data file.
+ * NO validity check here!
+ */
 class BGMovieRepositoryImpl : BGMovieRepository {
 
     private val itemsList: MutableList<BGMovie> = ArrayList() /* empty declaration. */
@@ -16,7 +20,7 @@ class BGMovieRepositoryImpl : BGMovieRepository {
 
     override fun update() {
         clear()
-        getFromResource()
+        getFromDataFile()
     }
 
     override fun getById(id: Int): BGMovie {
@@ -41,7 +45,7 @@ class BGMovieRepositoryImpl : BGMovieRepository {
         itemsMap[item.id] = item
     }
 
-    private fun getFromResource() {
+    private fun getFromDataFile() {
         LineReader(R.raw.movies).lines.forEach { line ->
             val tokens = line.split(',').map { eachPart -> eachPart.trim() }
 
