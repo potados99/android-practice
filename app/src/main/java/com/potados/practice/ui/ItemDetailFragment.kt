@@ -43,7 +43,7 @@ class ItemDetailFragment() : Fragment() {
         with (rootView) {
             fab.setOnClickListener { view ->
                 val desc = vm.getDescriptor().value
-                val file =  desc?.playableFile?.absoluteFile
+                val file =  desc?.playableFile
 
                 if (desc == null)
                     Alert.toast("뷰 모델에 문제가 있습니다.")

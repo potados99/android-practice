@@ -1,9 +1,15 @@
 package com.potados.practice.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityCompat
 import android.view.View
 import com.potados.practice.data.movie.BGMovieProvider
 import com.potados.practice.viewmodel.ItemDetailFragmentViewModel
@@ -30,6 +36,11 @@ class ItemListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_bgmovie_list)
         setSupportActionBar(toolbar)
 
+        gimmePermission(Manifest.permission.READ_EXTERNAL_STORAGE,
+            "외장 메모리를 사용하기 위해 읽기 권한이 필요합니다.")
+        gimmePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            "외장 메모리를 사용하기 위해 쓰기 권한이 필요합니다.")
+
         toolbar.title = this.title
 
         val twoPane: Boolean = (detail_fragment_container != null).apply {
@@ -45,14 +56,13 @@ class ItemListActivity : AppCompatActivity() {
                 info_fab.visibility = View.INVISIBLE
             }
         }
-
         with(vm) {
             setTwoPane(twoPane)
         }
 
         setupRecyclerView(item_list, twoPane)
+        setToolbarBackground("toolbar.png")
     }
-
 
     private fun setupRecyclerView(recyclerView: RecyclerView, twoPane: Boolean) {
         recyclerView.addItemDecoration(
@@ -64,4 +74,36 @@ class ItemListActivity : AppCompatActivity() {
             BGMovieItemRecyclerViewAdapter(this, movieProvider.moviesInList, twoPane)
     }
 
+    private fun gimmePermission(permission: String, explanation: String) {
+
+        if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                Toast.makeText(this, explanation, Toast.LENGTH_SHORT).show()
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            }
+            else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this, arrayOf(permission), 9)
+            }
+        }
+    }
+
+    private fun setToolbarBackground(fileName: String) {
+        val imgPath = storageProvider.theOnlyOneAndGoodVolumePath +
+                File.separator +
+                "res" +
+                File.separator +
+                fileName
+
+        if (File(imgPath).exists()) {
+            Drawable.createFromPath(imgPath)?.let {
+                list_app_bar.background = it
+            }
+        }
+    }
 }
