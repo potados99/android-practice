@@ -11,5 +11,5 @@ data class BGMovie(
     val title: String,
     val description: String,
     val filename: String,
-    val duration: Duration
+    val duration: Int
 )

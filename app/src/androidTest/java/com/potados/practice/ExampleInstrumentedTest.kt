@@ -1,18 +1,11 @@
 package com.potados.practice
 
-import android.os.Environment
-import android.os.storage.StorageManager
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import android.util.Log
-import com.potados.practice.util.LineReader
-import com.potados.practice.util.OTGStorage
-import com.potados.practice.util.VolumeManager
 
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -25,9 +18,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        OTGStorage.getVolumes().forEach {
-            Log.i("Hey Look ###### : ", it)
-        }
 
     }
 }

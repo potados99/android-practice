@@ -7,7 +7,7 @@ import java.time.Duration
 
 /**
  * Provide collection of BGMovie, based on data file.
- * NO validity check here!
+ * NO validation check here!
  */
 class BGMovieRepositoryImpl : BGMovieRepository {
 
@@ -54,9 +54,9 @@ class BGMovieRepositoryImpl : BGMovieRepository {
                     BGMovie(
                         id = tokens[0].toInt(),
                         title = tokens[1],
-                        description = "Descriptions needed?",
+                        description = "Descriptions?",
                         filename = tokens[2],
-                        duration = Duration.ZERO
+                        duration = 0
                     )
                 )
             }
@@ -74,7 +74,7 @@ object InvalidBGMovie {
             title = "INVALID",
             description = "id $id: $description",
             filename = "no filename",
-            duration = Duration.ZERO
+            duration = 0
         )
 
     fun wrongId(originId: Int): BGMovie =

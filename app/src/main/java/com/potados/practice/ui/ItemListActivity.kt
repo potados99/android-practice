@@ -15,13 +15,14 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.potados.practice.R
-import com.potados.practice.data.storage.StorageInfoProvider
+import com.potados.practice.data.storage.ExternalStorageProvider
+import java.io.File
 
 
 class ItemListActivity : AppCompatActivity() {
 
     private val movieProvider: BGMovieProvider by inject()
-    private val storageProvider: StorageInfoProvider by inject()
+    private val storageProvider: ExternalStorageProvider by inject()
     private val vm: ItemDetailFragmentViewModel by inject() /* to share global.. no better idea.. :( */
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +51,11 @@ class ItemListActivity : AppCompatActivity() {
         }
 
         setupRecyclerView(item_list, twoPane)
+
+
+        val properPath = storageProvider.theOnlyOneAndGoodVolumePath
+        Toast.makeText(this@ItemListActivity, properPath ?: "Nooooo exist!!", Toast.LENGTH_SHORT).show()
+
     }
 
 

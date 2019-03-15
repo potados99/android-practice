@@ -4,11 +4,10 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import com.potados.practice.data.movie.BGMovieProvider
+import com.potados.practice.data.storage.ExternalStorageProvider
 import com.potados.practice.di.appModule
 import com.potados.practice.ui.ErrorActivity
-import com.potados.practice.util.Alert
 import com.potados.practice.util.LineReader
-import com.potados.practice.util.OTGStorage
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.startKoin
 
@@ -18,6 +17,7 @@ class MyApp : Application() {
     }
 
     private val movieProvider: BGMovieProvider by inject()
+    private val storageProvider: ExternalStorageProvider by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -41,8 +41,12 @@ class MyApp : Application() {
         var okayToGo = true
         var msg = ""
 
-        if (OTGStorage.getVolumes().isEmpty()) {
+        if (storageProvider.volumes.isEmpty()) {
             msg = "저장소가 연결되지 않았습니다."
+            okayToGo = false
+        }
+        if (storageProvider.volumes.size > 1) {
+            msg = "저장소를 하나만 연결해 주세요."
             okayToGo = false
         }
         if (LineReader(R.raw.movies).fileExists.not()) {

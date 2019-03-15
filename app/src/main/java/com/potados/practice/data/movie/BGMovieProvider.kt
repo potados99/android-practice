@@ -1,13 +1,12 @@
 package com.potados.practice.data.movie
 
-import com.potados.practice.util.OTGStorage
-import java.io.File
-
 /**
  * Provide qualified collection of BGMovie.
  * Check whole validity using isAllValid.
  */
 class BGMovieProvider(private val repository: BGMovieRepository) {
+
+    fun updateRepository() = repository.update()
 
     val isAllValid: Boolean
         get() = (repository.getAllList().filter {
@@ -28,5 +27,4 @@ class BGMovieProvider(private val repository: BGMovieRepository) {
         return if (id == null) InvalidBGMovie.wrongId(0) else repository.getById(id)
     }
 
-    fun updateRepository() = repository.update()
 }
