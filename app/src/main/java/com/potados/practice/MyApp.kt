@@ -45,15 +45,15 @@ class MyApp : Application() {
             msg = "저장소가 연결되지 않았습니다."
             okayToGo = false
         }
-        if (storageProvider.volumes.size > 1) {
+        else if (storageProvider.volumes.size > 1) {
             msg = "저장소를 하나만 연결해 주세요."
             okayToGo = false
         }
-        if (LineReader(R.raw.movies).fileExists.not()) {
+        else if (LineReader(R.raw.movies).fileExists.not()) {
             msg = "데이터 파일이 존재하지 않아 계속할 수 없습니다."
             okayToGo = false
         }
-        if (movieProvider.isAllValid.not()) {
+        else if (movieProvider.isAllValid.not()) {
             msg = "파일이 변조되어 계속할 수 없습니다."
             okayToGo = false
         }

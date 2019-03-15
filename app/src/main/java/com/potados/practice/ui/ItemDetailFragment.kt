@@ -1,6 +1,8 @@
 package com.potados.practice.ui
 
 import android.arch.lifecycle.Observer
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -9,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.potados.practice.R
+import com.potados.practice.util.Alert
 import com.potados.practice.viewmodel.ItemDetailFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_bgmovie_detail.view.*
 import org.koin.android.ext.android.inject
@@ -39,9 +42,23 @@ class ItemDetailFragment() : Fragment() {
 
         with (rootView) {
             fab.setOnClickListener { view ->
-                Snackbar
-                    .make(view, "Play go go!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                val desc = vm.getDescriptor().value
+                val file =  desc?.playableFile?.absoluteFile
+
+                if (desc == null)
+                    Alert.toast("뷰 모델에 문제가 있습니다.")
+                else if (file == null)
+                    Alert.toast("영상을 재생할 수 없습니다.")
+
+                else if (!desc.makePlayable(true))
+                    Alert.toast("영상을 처리하는 데 실패했습니다.")
+                else {
+                    val uri = Uri.parse(file.absolutePath)
+                    val playIntent = Intent(Intent.ACTION_VIEW, uri).apply {
+                        setDataAndType(uri, "video/mp4")
+                    }
+                    startActivity(playIntent)
+                }
             }
 
             parentActivity.setSupportActionBar(detail_toolbar)
@@ -80,14 +97,4 @@ class ItemDetailFragment() : Fragment() {
 
         return rootView
     }
-
-    companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
-        const val ARG_ITEM_ID = "item_id"
-        const val ARG_TWO_PANE = "is_two_pane"
-    }
 }
-

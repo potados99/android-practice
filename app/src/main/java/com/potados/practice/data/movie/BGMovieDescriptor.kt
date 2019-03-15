@@ -66,7 +66,7 @@ class BGMovieDescriptor(private val movie: BGMovie?) : KoinComponent {
         }
 
     private val file: File = File(
-        storageProvider.mountRoot +
+        storageProvider.theOnlyOneAndGoodVolumePath +
                 File.separator +
                 MOVIE_DIR +
                 File.separator +

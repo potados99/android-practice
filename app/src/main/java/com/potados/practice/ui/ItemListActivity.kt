@@ -51,11 +51,6 @@ class ItemListActivity : AppCompatActivity() {
         }
 
         setupRecyclerView(item_list, twoPane)
-
-
-        val properPath = storageProvider.theOnlyOneAndGoodVolumePath
-        Toast.makeText(this@ItemListActivity, properPath ?: "Nooooo exist!!", Toast.LENGTH_SHORT).show()
-
     }
 
 
